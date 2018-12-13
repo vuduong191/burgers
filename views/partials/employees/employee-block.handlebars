@@ -1,0 +1,11 @@
+<li class="emp_col">
+	<img src="{{photo}}" class="emp_photo">
+	<p><strong>ID: </strong>{{id}}</p>
+	<p><strong>Name: </strong>{{emp_name}}</p>
+	<p><strong>Last Activity Time: </strong>{{format_time last_activities}}</p>
+	{{#if busy}}
+		<p class="busy_status">Is serving customers</h1>
+	{{else}}
+		<p class="idle_status">Idle</h1>
+	{{/if}}	
+</li>

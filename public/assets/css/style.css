@@ -1,0 +1,48 @@
+.emp_col {
+  height: 100px;
+  padding: 5px;
+  margin: 5px;
+  background: #e7e7e7;
+  border-radius: 8px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.create-update-form {
+  padding: 5px;
+  margin: 5px;
+  background: aqua;
+}
+.cust_in{
+  margin-top: 5px;
+}
+
+.form-group {
+  margin-bottom: 5px;
+}
+.emp_photo {
+  height:80px;
+  margin:5px;
+  float: left
+}
+.complete{
+  height: 2em;
+  font-size: 1em;
+}
+p {
+  margin:0;
+}
+.busy_status {
+  color:orange;
+}
+.idle_status {
+  color: green;
+}
+/* .emp_list{
+  width:100%;
+}
+.dashboard {
+  width:100%;
+} */

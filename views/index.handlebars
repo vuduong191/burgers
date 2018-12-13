@@ -1,0 +1,69 @@
+<div class='container'>
+  <div class='row'>
+    <div class = 'col-sm-4 emp_list'>
+      <h2>Employee List</h2>      
+      <ul>
+        {{#each employees}}
+            {{> employees/employee-block}}
+        {{/each}}
+      </ul>
+    </div>
+    <div class = 'col-sm-8 dashboard'>
+      <h2>New customer</h2>
+      <form class="create-form">
+        <div class="form-group">
+          <input type="text" id="cust_name" name="name" placeholder="Customer's name">
+        </div>
+        <strong>Select an available employee to serve.</strong>
+          <select data-placeholder="Choose an employee.." class="chosen-select" id="emp_select">
+            {{#each employees}}
+              {{#unless busy}}
+                {{> employees/employee-avail}}
+              {{/unless}}
+            {{/each}}          
+          </select>
+        <br>
+        <button type="submit" class="btn btn-primary submit_but">Add Customer</button>
+      </form>
+      <br><br><br>          
+      <h3>Customers in service</h3>
+      <ul>
+        {{#each custs}}
+            {{> custs/cust_in_service}}
+        {{/each}}
+      </ul>
+      <h3>Customer Log Book</h3>
+      <ul>
+        {{#each custs}}
+            {{> custs/cust_hist}}
+        {{/each}}
+      </ul>                    
+    </div>     
+  </div>
+</div>
+{{!-- <h2>Cats that are sleepy!</h2>
+
+<ul>
+  {{#each cats}}
+    {{#if sleepy}}
+      {{> cats/cat-block sleep=false}}
+    {{/if}}
+  {{/each}}
+</ul>
+
+<h2>Add a Cat</h2>
+<form class="create-form">
+
+  <div class="form-group">
+    <label for="ca">Cat Name:</label>
+    <input type="text" id="ca" name="name">
+  </div>
+
+  <div class="form-group">
+    <label for="slee">Sleepy?</label><br>
+    <input type="radio" name="sleepy" value="1" checked> Sleepy!<br>
+    <input type="radio" name="sleepy" value="0"> Awake
+  </div>
+
+  <button type="submit">Add Cat</button>
+</form> --}}
