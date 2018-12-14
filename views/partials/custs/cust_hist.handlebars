@@ -1,5 +1,6 @@
 {{#unless being_served}}
-    <li>
-        <p>{{customer}}</p>
+    <li class="cust_in">
+        <button class='delete btn btn-success' value={{id}}>x</button>         
+        <span>{{customer}} was served by {{emp_name}}</span>
     </li>
 {{/unless}}	

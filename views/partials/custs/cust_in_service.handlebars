@@ -1,6 +1,6 @@
 {{#if being_served}}
-    <li class="cust_in">
+    <li class="cust_in" value={{employee_id}}>
+        <button class='complete btn btn-primary' value={{id}}>✓</button>        
         <span><strong>{{customer}}</strong> is being served by <strong>{{emp_name}}</strong></span>
-        <button class='complete btn btn-primary'>✓</button>
     </li>
 {{/if}}	

@@ -1,18 +1,18 @@
 <div class='container'>
   <div class='row'>
     <div class = 'col-sm-4 emp_list'>
-      <h2>Employee List</h2>      
-      <ul>
+      <h2 class = "label_top">Employee List</h2>      
+      <div>
         {{#each employees}}
             {{> employees/employee-block}}
         {{/each}}
-      </ul>
+      </div>
     </div>
     <div class = 'col-sm-8 dashboard'>
-      <h2>New customer</h2>
+      <h2 class = "label_top">New customer</h2>
       <form class="create-form">
         <div class="form-group">
-          <input type="text" id="cust_name" name="name" placeholder="Customer's name">
+          <input type="text" class="form-control" id="cust_name" name="name" placeholder="Customer's name">
         </div>
         <strong>Select an available employee to serve.</strong>
           <select data-placeholder="Choose an employee.." class="chosen-select" id="emp_select">
@@ -25,19 +25,22 @@
         <br>
         <button type="submit" class="btn btn-primary submit_but">Add Customer</button>
       </form>
-      <br><br><br>          
-      <h3>Customers in service</h3>
-      <ul>
-        {{#each custs}}
-            {{> custs/cust_in_service}}
-        {{/each}}
-      </ul>
-      <h3>Customer Log Book</h3>
-      <ul>
-        {{#each custs}}
-            {{> custs/cust_hist}}
-        {{/each}}
-      </ul>                    
+      <div class="cust_log_block">          
+        <p class = "label_top_1">Customers in service</p>
+        <hr>
+        <ul>
+          {{#each custs}}
+              {{> custs/cust_in_service}}
+          {{/each}}
+        </ul>
+        <p class = "label_top_1">Customer Log Book</p>
+        <hr>
+        <ul>
+          {{#each custs}}
+              {{> custs/cust_hist}}
+          {{/each}}
+        </ul>
+      </div>                    
     </div>     
   </div>
 </div>

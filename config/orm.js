@@ -48,6 +48,15 @@ var orm = {
       cb(result);
     });
   },
+  deleteOne: function(tableInput, condition, cb) {
+    var queryString = "DELETE FROM " + tableInput + " WHERE "+condition;
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
   selectAllOrder: function(tableInput, colname, cb) {
     var queryString = "SELECT * FROM " + tableInput + " ORDER BY "+colname+";";
     connection.query(queryString, function(err, result) {
@@ -56,8 +65,16 @@ var orm = {
       }
       cb(result);
     });
-  },  
-  
+  },
+  selectCustomized: function(colname,tableInput, cb) {
+    var queryString = "SELECT "+colname.toString()+ " FROM " + tableInput +";";
+    connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },     
   insertOne: function(table, cols, vals, cb) {
     var queryString = "INSERT INTO " + table;
 

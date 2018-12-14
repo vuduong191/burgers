@@ -6,7 +6,8 @@ var burger = {
         })
     },
     allCust: function(cb){
-        orm.selectAll("in_service LEFT JOIN employee ON employee_id = employee.id", function(res){
+        var colname = ["in_service.id AS id","customer","employee_id", "emp_name", "being_served"]
+        orm.selectCustomized(colname,"in_service LEFT JOIN employee ON employee_id = employee.id", function(res){
             cb(res);
         })
     },
@@ -15,8 +16,13 @@ var burger = {
             cb(res);
         })
     },
-    updateOne: function(objColVals,condition, cb){
-        orm.updateOne("employee",objColVals,condition,function(res){
+    updateone: function(tableInput,objColVals,condition, cb){
+        orm.updateOne(tableInput,objColVals,condition,function(res){
+            cb(res)
+        })
+    },
+    deleteCust: function(id, cb){
+        orm.deleteOne("in_service", "id="+id, function(res){
             cb(res)
         })
     }
