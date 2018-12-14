@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
 
 router.post("/api/custs", function(req, res) {
   var newCust=req.body;
-  burger.insertOneCust([newCust.name,newCust.employee_id], function(result) {});
+  burger.insertOneCust([newCust.name, newCust.employee_id], function(result) {});
 });
 router.put("/api/emp/:id", function(req, res) {
   var condition = "id="+ req.params.id;

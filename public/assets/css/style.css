@@ -18,7 +18,9 @@ ul {
   margin-top: 30px;
   padding: 20px 20px 20px 20px;
 }
-
+button {
+  margin: 10px;
+}
 hr{
   margin-top:0;
 }
@@ -26,6 +28,7 @@ hr{
   font-family: 'Indie+Flower';
   font-size: 2.5em;
   color: white;
+  margin:50px 5px 25px 5px; 
 }
 .label_top_1 {
   font-family: 'Indie+Flower';
@@ -65,7 +68,7 @@ p {
   margin:0;
 }
 .busy_status {
-  color:rgb(112, 2, 2);
+  color:rgb(145, 3, 3);
 }
 .idle_status {
   color: green;

@@ -36,14 +36,23 @@ $(function() {
   $(".create-form").on("submit", function(event) {
     // Make sure to preventDefault on a submit event.
     event.preventDefault();
-
+    var date = new Date();
+    var utcDate = new Date(date.toUTCString());
+    utcDate.setHours(utcDate.getHours()-8);
+    var usDate = new Date(utcDate);
+    var act_time = usDate.getUTCFullYear() + '-' +
+      ('00' + (usDate.getUTCMonth()+1)).slice(-2) + '-' +
+      ('00' + usDate.getUTCDate()).slice(-2) + ' ' + 
+      ('00' + usDate.getUTCHours()).slice(-2) + ':' + 
+      ('00' + usDate.getUTCMinutes()).slice(-2) + ':' + 
+      ('00' + usDate.getUTCSeconds()).slice(-2);
     var newCust = {
       name: $("#cust_name").val().trim(),
-      employee_id: $("#emp_select").val().trim()
+      employee_id: $("#emp_select").val().trim(),
     };
 
     console.log(newCust)
-
+    console.log(act_time)
     // Send the POST request.    
     $.ajax("/api/custs", {
       type: "POST",
@@ -52,7 +61,18 @@ $(function() {
         console.log("New customer added.");
         location.reload();
     });
-    updateEmpStatus(newCust.employee_id, true);
+    // Change the last_activities and status of employee
+    var newStatus = {
+      busy: true,
+      last_activities: act_time      
+    }
+    $.ajax("/api/emp/"+newCust.employee_id,{
+      type: "PUT",
+      data: newStatus
+    }).then(function() {
+        console.log("Employee status changed.");
+        location.reload();
+    })
   });
   var updateEmpStatus = function(emp_id,status){
     var newStatus = {
