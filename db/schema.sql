@@ -1,8 +1,21 @@
-DROP DATABASE IF EXISTS burgers_db;
-CREATE DATABASE burgers_db;
-USE burgers_db;
-CREATE TABLE burgers (
-    id INTEGER(11) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    burger_name VARCHAR(100),
-    devoured BOOLEAN
+DROP DATABASE IF EXISTS nail_db;
+CREATE DATABASE nail_db;
+USE nail_db;
+
+CREATE TABLE  employee 
+(
+	id INTEGER(3) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    emp_name VARCHAR(100) NOT NULL,
+    busy BOOLEAN DEFAULT FALSE,
+    last_activities TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    photo VARCHAR(500)
+);
+CREATE TABLE in_service 
+(
+	id INTEGER(3) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    customer VARCHAR(100) NOT NULL,
+    start_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    employee_id INTEGER(3),
+    being_served BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
