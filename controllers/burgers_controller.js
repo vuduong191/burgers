@@ -20,6 +20,11 @@ router.post("/api/custs", function(req, res) {
   var newCust=req.body;
   burger.insertOneCust([newCust.name, newCust.employee_id, newCust.services, newCust.start_time], function(result) {});
 });
+router.post("/api/newemp", function(req, res) {
+  var newEmp=req.body.newEmp;
+  console.log(newEmp)
+  burger.insertOneEmp(newEmp, function(result) {});
+});
 router.delete("/api/del_emps", function(req,res){
   var id_array=req.body.id_array;
   burger.deleteEmp(id_array, function(result){})

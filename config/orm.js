@@ -84,7 +84,8 @@ var orm = {
       }
       cb(result);
     });
-  },     
+  },
+      //  vals and cols are arrays
   insertOne: function(table, cols, vals, cb) {
     var queryString = "INSERT INTO " + table;
 
@@ -131,6 +132,7 @@ var orm = {
     queryString += " WHERE ";
     queryString += condition_col;    
     queryString += " IN (?)";
+    // You need that () to make it work
 
     console.log(queryString);
     connection.query(queryString, valueArray, function(err, result) {

@@ -16,6 +16,11 @@ var burger = {
             cb(res);
         })
     },
+    insertOneEmp: function(vals, cb){
+        orm.insertOne("employee",["emp_name","photo"], vals, function(res){
+            cb(res);
+        })
+    },    
     updateone: function(tableInput,objColVals,condition, cb){
         orm.updateOne(tableInput,objColVals,condition,function(res){
             cb(res)

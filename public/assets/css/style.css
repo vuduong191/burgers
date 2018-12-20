@@ -12,6 +12,11 @@ body{
   background: #e7e7e79a;
   border-radius: 8px;
 }
+
+.modal-body {
+  background-image: url('../images/04.jpg');
+  color: rgba(255, 255, 255, 0.671);
+}
 a {
   color: inherit; /* blue colors for links too */
   text-decoration: inherit; /* no underline */
@@ -42,6 +47,11 @@ hr{
   font-size: 1.5em;
   color: rgb(58, 58, 58);
   margin-top: 3em;
+}
+.modal-title {
+  font-family: 'Indie+Flower';
+  font-size: 1.5em;
+  color: rgb(212, 212, 212);
 }
 .label_top_1:nth-child(1) {
   margin-top: 0;
