@@ -2,57 +2,90 @@
 $(function() {
   $(document).on("click", "button.delete", deleteCust);
   $(document).on("click", "button.complete", toggleComplete);
+  $(document).on("click", "button.recover", recoverCust);
+  $("#emp_del_submit").on("click",del_emp);
 
+  function del_emp(event){
+    event.stopPropagation();
+    var idArray= [$("#emp_del_select").val()];
+    var  newStatus = {emp_deleted:true}
+    updateEmpStatus(idArray,newStatus);      
+  }
+  // This function deletes employees from an array of IDs, not used yet
+  function del_emp_array(id_array) {
+    $.ajax("/api/del_emps", {
+      type: "DELETE",
+      data: {id_array:id_array}
+    }).then(
+      function() {
+      }
+    );
+  };
     // This function deletes a customer from Log Book
   function deleteCust(event) {
     event.stopPropagation();
-    var cust_id = $(this).val().trim();
-    $.ajax({
-      method: "DELETE",
-      url: "/api/delete/" + cust_id
-    }).then(function() {
-        console.log("Customer deleted.");
-        location.reload();
-    });
-  }
-
-  // This function move a customer from In-service block to Log Book (complete)
-  function toggleComplete(event) {
-    event.stopPropagation();
-    var cust_id = $(this).val().trim();
-    var emp_id = $(this).parent().val();
-    // cannot use .trim() up there.
-    console.log("Cust_id and Emp_id for completion: "+cust_id+" + "+emp_id)
+    var cust_id = $(this).data("cust_id");
+    var del_reason = "'"+escape(prompt("Reason for entry deletion:", "..."))+"'";
     $.ajax("/api/complete_cust/"+cust_id,{
       type: "PUT",
-      data: ""
+      data: {deleted:true, del_reason:del_reason}
     }).then(function() {
         console.log("Customer's status changed.");
         location.reload();
     });
-    updateEmpStatus(emp_id,false);    
+  };
+
+   function recoverCust(event) {
+    event.stopPropagation();
+    var cust_id = $(this).data("cust_id");
+    $.ajax("/api/complete_cust/"+cust_id,{
+      type: "PUT",
+      data: {deleted:false}
+    }).then(function() {
+        console.log("Customer's status changed.");
+        location.reload();
+    });
+  };
+
+  // This function move a customer from In-service block to Log Book (complete)
+  function toggleComplete(event) {
+    event.stopPropagation();
+    var custID = $(this).data("cust_id");
+    var empID= $(this).data("emp_id");
+    var actTime = moment().format("YYYY-MM-DD HH:mm:ss");    
+    console.log("Cust_id and Emp_id for completion: "+custID+" + "+empID);
+    var bill_info = {
+      being_served: false,
+      bill: $(this).parent().siblings(".bill").children("input").val().trim(),
+      tip: $(this).parent().siblings(".tip").children("input").val().trim(),
+      end_time: actTime
+    }
+    // cannot use .trim() up there.
+
+    $.ajax("/api/complete_cust/"+custID,{
+      type: "PUT",
+      data: bill_info
+    }).then(function() {
+        console.log("Customer's status changed.");
+        location.reload();
+    });
+    var idArray=[empID];
+    var  newStatus = {busy:false}
+    updateEmpStatus(idArray,newStatus);    
   }
 
   $(".create-form").on("submit", function(event) {
-    // Make sure to preventDefault on a submit event.
     event.preventDefault();
-    var date = new Date();
-    var utcDate = new Date(date.toUTCString());
-    utcDate.setHours(utcDate.getHours()-8);
-    var usDate = new Date(utcDate);
-    var act_time = usDate.getUTCFullYear() + '-' +
-      ('00' + (usDate.getUTCMonth()+1)).slice(-2) + '-' +
-      ('00' + usDate.getUTCDate()).slice(-2) + ' ' + 
-      ('00' + usDate.getUTCHours()).slice(-2) + ':' + 
-      ('00' + usDate.getUTCMinutes()).slice(-2) + ':' + 
-      ('00' + usDate.getUTCSeconds()).slice(-2);
+    var actTime = moment().format("YYYY-MM-DD HH:mm:ss")
     var newCust = {
+      start_time: actTime,
       name: $("#cust_name").val().trim(),
       employee_id: $("#emp_select").val().trim(),
+      services: $("#services").val().trim()
     };
 
     console.log(newCust)
-    console.log(act_time)
+    console.log(actTime)
     // Send the POST request.    
     $.ajax("/api/custs", {
       type: "POST",
@@ -64,26 +97,21 @@ $(function() {
     // Change the last_activities and status of employee
     var newStatus = {
       busy: true,
-      last_activities: act_time      
+      last_activities: actTime      
     }
-    $.ajax("/api/emp/"+newCust.employee_id,{
-      type: "PUT",
-      data: newStatus
-    }).then(function() {
-        console.log("Employee status changed.");
-        location.reload();
-    })
+    var idArray=[newCust.employee_id];
+    updateEmpStatus(idArray,newStatus);  
   });
-  var updateEmpStatus = function(emp_id,status){
-    var newStatus = {
-      busy: status
+  function updateEmpStatus(emp_id_array,newStatus){
+    var data={
+      emp_id_array: emp_id_array,
+      newStatus: newStatus
     }
-    $.ajax("/api/emp/"+emp_id,{
+    $.ajax("/api/emp",{
       type: "PUT",
-      data: newStatus
+      data: data
     }).then(function() {
         console.log("Employee status changed.");
-        location.reload();
     })
   }
   // $(".change-sleep").on("click", function(event) {

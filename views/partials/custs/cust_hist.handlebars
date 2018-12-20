@@ -1,6 +1,14 @@
+{{#unless deleted}}
 {{#unless being_served}}
-    <li class="cust_in">
-        <button class='delete btn btn-success' value={{id}}>x</button>         
-        <span>{{customer}} was served by {{emp_name}}</span>
-    </li>
-{{/unless}}	
+    <tr class="cust_in">
+      <th scope="row"><button class='delete btn btn-danger' data-cust_id="{{id}}">X</button></th>
+      <td>{{customer}}</td>
+      <td>{{emp_name}}</td>
+      <td>{{services}}</td>      
+      <td>{{format_time start_time}}</td>
+      <td>{{format_time end_time}}</td>      
+      <td>{{bill}}</td>
+      <td>{{tip}}</td>                  
+    </tr>      
+{{/unless}}
+{{/unless}}		

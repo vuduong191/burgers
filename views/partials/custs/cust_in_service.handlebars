@@ -1,6 +1,13 @@
+{{#unless deleted}}
 {{#if being_served}}
-    <li class="cust_in" value={{employee_id}}>
-        <button class='complete btn btn-primary' value={{id}}>✓</button>        
-        <span><strong>{{customer}}</strong> is being served by <strong>{{emp_name}}</strong></span>
-    </li>
-{{/if}}	
+    <tr class="cust_in">
+      <td scope="row"><button data-cust_id="{{id}}" data-emp_id="{{employee_id}}" class='complete btn btn-primary'>✓</button></td>
+      <td>{{customer}}</td>
+      <td>{{emp_name}}</td>
+      <td>{{services}}</td>      
+      <td>{{format_time start_time}}</td>
+      <td class="bill"><input type="text" class="number_in_table" placeholder="Bill..."></td>
+      <td class="tip"><input type="text" class="number_in_table" placeholder="Tip..."></td>                  
+    </tr>    
+{{/if}}
+{{/unless}}	

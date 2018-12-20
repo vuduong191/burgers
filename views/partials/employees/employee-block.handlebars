@@ -1,11 +1,18 @@
 <div class="emp_col">
+	<div class="emp_photo_block">
+	{{#if enabled}}
+		{{#if busy}}
+			<div class="busy_status"><i class="fas fa-exclamation-circle"></i></div>
+		{{else}}
+			<div class="idle_status"><i class="fas fa-check-circle"></i></div>
+		{{/if}}			
+	{{else}}
+		<div class="disabled_status"><i class="fas fa-ban"></i></div>	
+	{{/if}}
+			
 	<img src="{{photo}}" class="emp_photo">
+	</div>
 	<p><strong>ID: </strong>{{id}}</p>
 	<p><strong>Name: </strong>{{emp_name}}</p>
-	<p><strong>Last Activity Time: </strong>{{format_time last_activities}}</p>
-	{{#if busy}}
-		<p class="busy_status">Is serving customers</h1>
-	{{else}}
-		<p class="idle_status">Idle</h1>
-	{{/if}}	
+	<p><strong>Last Activity Time: </strong>{{format_time last_activities}}</p>	
 </div>

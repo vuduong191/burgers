@@ -7,18 +7,29 @@
             {{> employees/employee-block}}
         {{/each}}
       </div>
+      <h2 class = "label_top">Edit Employees</h2>
+      <div class="edit_emp_block">
+        <span><button type="button" data-toggle="modal" data-target="#del-emp-modal" class="btn btn-default" id="del-emp-cmd"><i class="fas fa-user-times"></i></button><span class="tooltiptext">Delete Employee(s)</span></span>
+        <span><button type="button" class="btn btn-default" id="reset-time-cmd"><i class="fas fa-stopwatch"></i></button><span class="tooltiptext">Reset Time</span></span>
+        <span><button type="button" class="btn btn-default" id="add-new-cmd"><i class="fas fa-user-plus"></i></button><span class="tooltiptext">Add New Employee</span></span>
+        <span><button type="button" class="btn btn-default" id="update-emp-cmd"><i class="fas fa-user-edit"></i></button><span class="tooltiptext">Update Employee's Info</span></span>
+        <span><button type="button" class="btn btn-default" id="reset-cust-cmd"><i class="fas fa-power-off"></i></button><span class="tooltiptext">Reset Customer Log</span></span>                                 
+      </div>
+               
     </div>
     <div class = 'col-sm-8 dashboard'>
       <h2 class = "label_top">New Customer</h2>
       <form class="create-form">
         <div class="form-group">
           <input type="text" class="form-control" required="required" id="cust_name" name="name" placeholder="Customer's name">
-        </div>
+          <input type="text" class="form-control" required="required" id="services" name="name" placeholder="Services"></div>
         <strong>Select an available employee to serve.</strong>
           <select data-placeholder="Choose an employee.." class="chosen-select" id="emp_select">
             {{#each employees}}
               {{#unless busy}}
-                {{> employees/employee-avail}}
+                {{#if enabled}}
+                  {{> employees/employee-avail}}
+                {{/if}}
               {{/unless}}
             {{/each}}          
           </select>
@@ -26,22 +37,143 @@
         <button type="submit" class="btn btn-warning submit_but">Add Customer</button>
       </form>
       <div class="cust_log_block">          
-        <p class = "label_top_1">Customers in Service</p>
-        <hr>
-        <ul>
-          {{#each custs}}
-              {{> custs/cust_in_service}}
-          {{/each}}
-        </ul>
-        <p class = "label_top_1">Customer Log Book</p>
-        <hr>
-        <ul>
-          {{#each custs}}
-              {{> custs/cust_hist}}
-          {{/each}}
-        </ul>
+        <p class = "label_top_1"><i class="fas fa-user-cog"></i> Customers in Service</p>
+        <table class="table table-striped in_service_table">
+          <colgroup>
+            <col  class="table_number1">
+            <col  class="table_number2">
+            <col  class="table_number2">
+            <col  class="table_number3">
+            <col  class="table_number1">          
+            <col  class="table_number1">
+            <col  class="table_number1">          
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Employee</th>
+              <th scope="col">Services</th>
+              <th scope="col">Start</th>                             
+              <th scope="col">Bill</th>
+              <th scope="col">Tip</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each custs}}
+                {{> custs/cust_in_service}}
+            {{/each}}            
+          </tbody>
+        </table>         
+        <p class = "label_top_1"><i class="fas fa-user-check"></i> Customer Log Book</p>
+        <table class="table table-striped log_book_table">
+          <colgroup>
+            <col  class="log_number1">
+            <col  class="log_number2">
+            <col  class="log_number2">
+            <col  class="log_number3">            
+            <col  class="log_number1">
+            <col  class="log_number1">          
+            <col  class="log_number1">
+            <col  class="log_number1">          
+          </colgroup>
+
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Employee</th>
+              <th scope="col">Services</th>
+              <th scope="col">Start</th>
+              <th scope="col">Finish</th>                                             
+              <th scope="col">Bill</th>
+              <th scope="col">Tip</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each custs}}
+                {{> custs/cust_hist}}
+            {{/each}}          
+          </tbody>
+        </table>
+        <p class = "label_top_1"><i class="fas fa-user-alt-slash"></i> Deleted Entries</p>
+        <table class="table table-striped del_table">
+          <colgroup>
+            <col  class="del_number1">         
+            <col  class="del_number2">
+            <col  class="del_number3">        
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col"></th>              
+              <th scope="col">Entry</th>
+              <th scope="col">Reason</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each custs}}
+                {{> custs/cust_del}}
+            {{/each}}          
+          </tbody>
+        </table>                
       </div>                    
     </div>     
+  </div>
+</div>
+<!-- Modal: Delete Employee(s)-->
+<div id="del-emp-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title"><strong>Delete Employee(s)</strong></h2>
+        <p>Select employee to delete</p>
+        <div class="chosen-container">
+          <select data-placeholder="Choose an employee.." class="chosen-select" multiple id="emp_del_select">
+            {{#each employees}}
+                  {{> employees/employee-avail}}
+            {{/each}}          
+          </select>
+        </div>  
+        <button type="button" class="btn btn-default" id="emp_del_submit">Delete</button>                  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: Add New Employee(s)-->
+<div id="add-emp-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title"><strong>Best Match</strong></h2>
+        <h2 id="match-name"></h2>
+        <img id="match-img" src="http://54.163.73.103/configfiles/No_Image.png" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal: Update Employee(s)' info-->
+<div id="update-emp-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h2 class="modal-title"><strong>Best Match</strong></h2>
+        <h2 id="match-name"></h2>
+        <img id="match-img" src="http://54.163.73.103/configfiles/No_Image.png" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 {{!-- <h2>Cats that are sleepy!</h2>

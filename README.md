@@ -4,7 +4,7 @@
 
 #### Overview
 
-This is week 14 assignment, in which we were to create a burger logger with MySQL, Node, Express, Handlebars and a homemade ORM (yum!). This is also the first time we follow the MVC design pattern; useing Node and MySQL to query and route data in the app, and Handlebars to generate HTML.
+This is week 14 assignment, in which we were to create a burger logger with MySQL, Node, Express, Handlebars and a homemade ORM (yum!). This is also the first time we follow the MVC design pattern; using Node and MySQL to query and route data in the app, and Handlebars to generate HTML.
 
 The original requirement is a very simple app [Demo](https://youtu.be/msvdn95x9OM). However, I consider this app ridiculously useless, probably the most useless app among all the homework I did so far. Therefore, I decided to create another app called Service Tracking app, which maybe useful in nail salons or barbershops. To serve the purpose of understanding and practicing what we learned during the week, this alternative app works just as well because it uses very similar concepts.
 

@@ -48,6 +48,16 @@ var orm = {
       cb(result);
     });
   },
+  deleteFromArray: function(tableInput, colInput, valueArray, cb){
+    var queryString = "DELETE FROM " + tableInput + " WHERE "+colInput+" IN (?)";
+    console.log(queryString);
+    connection.query(queryString, valueArray, function(err, result) {
+      if (err) {
+        throw err;
+      }
+      cb(result);
+    });
+  },
   deleteOne: function(tableInput, condition, cb) {
     var queryString = "DELETE FROM " + tableInput + " WHERE "+condition;
     connection.query(queryString, function(err, result) {
@@ -106,6 +116,24 @@ var orm = {
 
     console.log(queryString);
     connection.query(queryString, function(err, result) {
+      if (err) {
+        throw err;
+      }
+
+      cb(result);
+    });
+  },
+  updateFromArray: function(table, objColVals, condition_col, valueArray, cb) {
+    var queryString = "UPDATE " + table;
+
+    queryString += " SET ";
+    queryString += objToSql(objColVals);
+    queryString += " WHERE ";
+    queryString += condition_col;    
+    queryString += " IN (?)";
+
+    console.log(queryString);
+    connection.query(queryString, valueArray, function(err, result) {
       if (err) {
         throw err;
       }
