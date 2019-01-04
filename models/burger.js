@@ -11,6 +11,11 @@ var burger = {
             cb(res);
         })
     },
+    allService: function(cb){
+        orm.selectAll("services",function(res){
+            cb(res);
+        })
+    },    
     insertOneCust: function(vals, cb){
         orm.insertOne("in_service",["customer","employee_id","services","start_time"], vals, function(res){
             cb(res);
@@ -21,13 +26,23 @@ var burger = {
             cb(res);
         })
     },    
-    updateone: function(tableInput,objColVals,condition, cb){
+    updateOne: function(tableInput,objColVals,condition, cb){
         orm.updateOne(tableInput,objColVals,condition,function(res){
             cb(res)
         })
     },
+    updateAll: function(tableInput,objColVals, cb){
+        orm.updateAll(tableInput,objColVals,function(res){
+            cb(res)
+        })
+    },    
     deleteCust: function(id, cb){
         orm.deleteOne("in_service", "id="+id, function(res){
+            cb(res)
+        })
+    },
+    deleteAll: function(tableInput, cb){
+        orm.deleteAll(tableInput, function(res){
             cb(res)
         })
     },

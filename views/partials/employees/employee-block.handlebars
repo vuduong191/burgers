@@ -1,18 +1,18 @@
-<div class="emp_col">
+<div class="emp_col" id="emp_col_{{id}}">
 	<div class="emp_photo_block">
 	{{#if enabled}}
 		{{#if busy}}
-			<div class="busy_status"><i class="fas fa-exclamation-circle"></i></div>
+			<div class="busy_status" id="emp_block_status_{{id}}" data-busy="true" data-enable="true"><i class="fas fa-exclamation-circle"></i></div>
 		{{else}}
-			<div class="idle_status"><i class="fas fa-check-circle"></i></div>
+			<div class="idle_status" id="emp_block_status_{{id}}" data-busy="false" data-enable="true"><i class="fas fa-check-circle"></i></div>
 		{{/if}}			
 	{{else}}
-		<div class="disabled_status"><i class="fas fa-ban"></i></div>	
+		<div class="disabled_status" id="emp_block_status_{{id}}" data-busy="false" data-enable="false"><i class="fas fa-ban"></i></div>	
 	{{/if}}
 			
-	<img src="{{photo}}" class="emp_photo">
+	<img id="emp_col_img_{{id}}" src="{{photo}}" class="emp_photo">
 	</div>
 	<p><strong>ID: </strong>{{id}}</p>
-	<p><strong>Name: </strong>{{emp_name}}</p>
-	<p><strong>Last Activity Time: </strong>{{format_time last_activities}}</p>	
+	<p><strong>Name: </strong><span id="emp_col_emp_name_{{id}}">{{emp_name}}</span></p>
+	<p><strong>LAT: </strong><span id="emp_col_time_{{id}}">{{format_time last_activities}}</span></p>	
 </div>

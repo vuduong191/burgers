@@ -9,9 +9,23 @@ router.get("/", function(req, res) {
       employees: data
     };
     burger.allCust(function(data1){
+        hbsObject.custs = data1;      
+        burger.allService(function(data2){
+          hbsObject.services=data2;
+          res.render("index", hbsObject);
+        })
+    })
+  });
+});
+router.get("/manager", function(req, res) {
+  burger.allEmp(function(data) {
+    var hbsObject = {
+      employees: data
+    };
+    burger.allCust(function(data1){
         hbsObject.custs = data1;
         console.log(hbsObject.custs);        
-        res.render("index", hbsObject);
+        res.render("manager", hbsObject);
     })
   });
 });
@@ -40,11 +54,30 @@ router.put("/api/emp", function(req, res) {
     res.status(200).end()
   })
 });
+router.put("/api/resettime", function(req, res) {
+  var newStatus = req.body;
+  burger.updateAll("employee", newStatus, function(result) {
+    if (result.changedRows === 0) {
+      return res.status(404).end();
+    }
+    res.status(200).end()
+  })
+});
+router.put("/api/updateemp/:id", function(req, res) {
+  var objColVals = req.body;
+  var id = req.params.id;
+  burger.updateOne("employee", objColVals, "id="+id, function(result) {
+    if (result.changedRows === 0) {
+      return res.status(404).end();
+    }
+    res.status(200).end()
+  })
+});
 router.put("/api/complete_cust/:id", function(req, res) {
   var condition = "id="+ req.params.id;
   var bill_info = req.body;
   console.log(condition)
-  burger.updateone("in_service",bill_info,condition, function(result) {
+  burger.updateOne("in_service",bill_info,condition, function(result) {
     if (result.changedRows === 0) {
       return res.status(404).end();
     }
@@ -57,6 +90,14 @@ router.delete("/api/delete/:id", function(req, res) {
   burger.deleteCust(id, function(result) {
     // Send back the ID of the new quote
     res.json({ id: result.insertId });
+  });
+});
+router.delete("/api/resetcust", function(req, res) {
+  burger.deleteAll("in_service", function(result) {
+    if (result.changedRows === 0) {
+      return res.status(404).end();
+    }
+    res.status(200).end();
   });
 });
 // Export routes for server.js to use.
